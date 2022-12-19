@@ -182,7 +182,7 @@ controller.route('/edit:articleNumber').post(authorize, async(req, res) => {
     if (!name || !price)
     res.status(400).json({text: 'Name & Price is required.'})
 
-    const item_exists = await ProductSchema.findONe({name})
+    const item_exists = await ProductSchema.findOne({name})
     if (item_exists)
         res.status(400).json({text: 'A Product with the same Name already exsits.'})
     else {

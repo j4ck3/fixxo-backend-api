@@ -18,20 +18,19 @@ const VendorType = new GraphQLObjectType({
             }
         }
     })
-
 })
 
 const ProductType = new GraphQLObjectType({
     name: 'Product',
     fields: () => ({
-        _id: { type: GraphQLID},
-        name: { type: GraphQLString},
+        _id: { type: GraphQLID },
+        name: { type: GraphQLString },
         price: { type: GraphQLString }, // ändra price till string istället för nummer
-        tag: { type: GraphQLString},
-        rating: { type: GraphQLString},
-        category: { type: GraphQLString},
-        description: { type: GraphQLString},
-        imageName: { type: GraphQLString},
+        tag: { type: GraphQLString },
+        rating: { type: GraphQLString },
+        category: { type: GraphQLString },
+        description: { type: GraphQLString },
+        imageName: { type: GraphQLString },
         vendor: {
             type: VendorType,
             resolve (parent, args) {
@@ -42,7 +41,7 @@ const ProductType = new GraphQLObjectType({
 })
 
 const RootQurey = new GraphQLObjectType({
-    name: 'RootQureyType',
+    name: 'RootQueryType', 
     fields: {
         vendor: {
             type: VendorType,
@@ -62,13 +61,37 @@ const RootQurey = new GraphQLObjectType({
             type: ProductType,
             args: { id: { type: GraphQLID } },
             resolve(parent, args) {
-                return  Vendor.findById(args.id)
+                return  Product.findById(args.id)
             }
         },
         products: {
-            type: ProductType,
+            type: new GraphQLList(ProductType),
             resolve(parent, args) {
-                return  Vendor.find({})
+                return  Product.find({})
+            }
+        },
+
+        productsByTag: {
+            type: new GraphQLList (ProductType),
+            args: { tag: { type: GraphQLString }},
+            resolve(parent, args) {
+                return Product.find({tag: args.tag}).limit(8)
+            }
+        },
+
+        productsByCategory: {
+            type: new GraphQLList (ProductType),
+            args: { category: { type: GraphQLString }},
+            resolve(parent, args) {
+                return Product.find({category: args.category})
+            }
+        },
+
+        productsByRating: {
+            type: new GraphQLList (ProductType),
+            args: { rating: { type: GraphQLString }},
+            resolve(parent, args) {
+                return Product.find({rating: args.rating})
             }
         }
     }

@@ -19,7 +19,7 @@ app.use('/graphql', graphqlHTTP({
     graphiql: true
 }))
 
-app.use('/api/products', require('./controllers/productController'))
+//app.use('/api/products', require('./controllers/productController'))
 app.use('/api/authentication', require('./controllers/authenticationController'))
 //app.use('/api/users', require('./controllers/usersController'))
 
