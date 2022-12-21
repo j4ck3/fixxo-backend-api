@@ -25,7 +25,7 @@ const ProductType = new GraphQLObjectType({
     fields: () => ({
         _id: { type: GraphQLID },
         name: { type: GraphQLString },
-        price: { type: GraphQLString }, // ändra price till string istället för nummer
+        price: { type: GraphQLString },
         tag: { type: GraphQLString },
         rating: { type: GraphQLString },
         category: { type: GraphQLString },
@@ -93,7 +93,15 @@ const RootQurey = new GraphQLObjectType({
             resolve(parent, args) {
                 return Product.find({rating: args.rating})
             }
-        }
+        },
+
+
+
+/*         updateProduct: {
+            type: ProductType,
+            args: { id: { type: GraphQLID}
+            }
+        } */
     }
 })
 
@@ -112,6 +120,7 @@ const Mutations = new GraphQLObjectType({
                 return vendor.save()
             }
         },
+
         addProduct: {
             type: ProductType,
             args: {
@@ -137,7 +146,42 @@ const Mutations = new GraphQLObjectType({
                 })
                 return product.save()
             }
-        }
+        },
+
+        updateProduct: {
+            type: ProductType,
+            args: { 
+                id: { type: GraphQLID},
+                name: { type: GraphQLString},
+                price: { type: GraphQLString }, 
+                tag: { type: GraphQLString},
+                rating: { type: GraphQLString},
+                category: { type: GraphQLString},
+                description: { type: GraphQLString},
+                imageName: { type: GraphQLString},
+                vendorId: { type: GraphQLID}
+            },
+            resolve (parent, args) {
+                return Product.findByIdAndUpdate({_id: args.id}, {
+                    name: args.name,
+                    price: args.price,
+                    tag: args.tag,
+                    rating: args.rating,
+                    category: args.category,
+                    description: args.description,
+                    imageName: args.imageName,
+                    vendorId: args.vendorId
+                }, { new: true })
+            }
+        },
+
+        deleteProduct: {
+            type: ProductType,
+            args: { id: { type: GraphQLID}},
+            resolve (parent, args) {
+                return Product.findByIdAndRemove({_id: args.id})
+            }
+        },
     }
 })
 
