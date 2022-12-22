@@ -1,4 +1,4 @@
-const express = require('express')
+/* const express = require('express')
 const controller = express.Router()
 const ProductSchema = require('../Schemas/productSchema')
 const { authorize } = require('../middlewares/auth')
@@ -160,7 +160,7 @@ controller.route('/').post(authorize, async(req, res) => {
 })
 
 //edit
-controller.route('/edit:articleNumber').post(authorize, async(req, res) => {
+controller.route('/edit/:articleNumber').post(authorize, async(req, res) => {
     const product = await ProductSchema.findById({tag: req.params.articleNumber})
     if (product){
         res.status(200).json({
@@ -203,7 +203,7 @@ controller.route('/edit:articleNumber').post(authorize, async(req, res) => {
 })
 
 //delete
-controller.route('/delete:articleNumber').delete(authorize, async(req, res) => {
+controller.route('/delete/:articleNumber').delete(authorize, async(req, res) => {
     if(!req.params.articleNumber)
         res.status(400).json({text: 'No article number was specified.'})
     else {
@@ -217,30 +217,4 @@ controller.route('/delete:articleNumber').delete(authorize, async(req, res) => {
     }
 })
 
-module.exports = controller
-
-
-
-
-/* 
-controller.param("articleNumber", (req, res, next, articleNumber) => {
-    req.product = products.find(x => x.articleNumber === articleNumber)
-    next()
-})
-
-controller.param("tag", (req, res, next, tag) => {
-    req.products = products.filter(x => x.tag === tag)
-    next()
-})
-
-controller.param("category", (req, res, next, category) => {
-    req.products = products.filter(x => x.category === category)
-    next()
-})
-
-controller.param("rating", (req, res, next, rating) => {
-    req.products = products.filter(x => x.rating == rating)
-    next()
-})
-
- */
+module.exports = controller */

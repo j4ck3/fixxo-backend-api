@@ -3,8 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const controller = express.Router()
 const userSchema = require('../Schemas/userSchema')
-const { generateAaccessToken } = require('../middlewares/auth')
-
+const { generateAccessToken } = require('../middlewares/auth')
 
 controller.route('/signup').post(async (req, res) => {
      const {firstName, lastName, email, password} = req.body
@@ -40,10 +39,13 @@ controller.route('/signin').post(async (req, res) => {
         res.status(400).json({text: 'Please fill in the the fields.'})
 
     const user = await userSchema.findOne({email})
+
     if (user && await bcrypt.compare(password, user.password)) {
         res.status(200).json({
-            accessToken: generateAaccessToken(user._id)
+            text: 'Login successfull!',
+            accessToken: generateAccessToken(user._id)
         })
+
     } else {
         res.status(400).json({text: 'The email or password is incorrect.'})
     }

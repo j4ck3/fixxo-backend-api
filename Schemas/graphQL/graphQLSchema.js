@@ -1,6 +1,5 @@
 const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLList, GraphQLSchema} = graphql
-
 const Vendor = require('../mongoDb/vendorSchema');
 const Product = require('../mongoDb/productSchema');
 
@@ -93,15 +92,8 @@ const RootQurey = new GraphQLObjectType({
             resolve(parent, args) {
                 return Product.find({rating: args.rating})
             }
-        },
+        }
 
-
-
-/*         updateProduct: {
-            type: ProductType,
-            args: { id: { type: GraphQLID}
-            }
-        } */
     }
 })
 
