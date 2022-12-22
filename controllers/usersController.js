@@ -9,7 +9,7 @@ controller.param("id", async (req, res, next) => {
 })
 
 controller.route('/')
-.get(authorize, async (req, res) => {
+.get(async (req, res) => {
     const users = await userSchema.find()
     res.status(200).json(users)
 })
